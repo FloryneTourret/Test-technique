@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="login">
+
+    {{ form_start(form) }}
+        <fieldset class="uk-fieldset">
+                
+            <legend class="uk-legend">Register</legend>
+            
+            <div class="uk-margin">
+                {{ form_row(form.username) }}
+            </div>
+                {{ form_row(form.email) }}
+            <div class="uk-margin">
+                {{ form_row(form.password.first) }}
+            </div>
+            <div class="uk-margin">
+                 {{ form_row(form.password.second) }}
+            </div>
+        
+            
+            <div class="uk-margin" uk-margin>
+                <button class="uk-button uk-button-default" type="submit" >Log In</button>
+            </div>
+            
+        </fieldset>
+    {{ form_end(form) }}
+    
+</div>
+   
+{% endblock %}

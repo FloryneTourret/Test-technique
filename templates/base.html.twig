@@ -3,10 +3,44 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+
         {% block stylesheets %}{% endblock %}
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/master.css') }}" />
+
     </head>
     <body>
+        {% block navbar %}
+        <nav class="uk-navbar-container navbar" uk-navbar>
+
+            <div class="uk-navbar-left">
+
+                <ul class="uk-navbar-nav">
+                    <li class="uk-active"><a href="{{ path('index') }}">Accueil</a></li>
+            </div>
+
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                {% if app.user %}
+                    <li><a href="{{ path('admin') }}">{{ app.user.username }}</a></li>
+                    <li><a href="{{ path('security_logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ path('security_login') }}">Login</a></li>
+                        <li><a href="{{ path('user_registration') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+
+            </div>
+
+        </nav>
+        {% endblock %}
+
         {% block body %}{% endblock %}
+
         {% block javascripts %}{% endblock %}
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js"></script>
     </body>
 </html>
