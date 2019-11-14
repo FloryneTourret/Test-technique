@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="main">
+
+    {{ form_start(form) }}
+        <fieldset class="uk-fieldset">
+                
+            <legend class="uk-legend">Add article</legend>
+            
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+        
+            
+            <div class="uk-margin" uk-margin>
+                <button class="uk-button uk-button-default" type="submit">Add article</button>
+            </div>
+            
+        </fieldset>
+    {{ form_end(form) }}
+    
+</div>
+   
+{% endblock %}

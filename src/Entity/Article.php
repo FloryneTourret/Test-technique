@@ -28,7 +28,6 @@ class Article
      */
     private $description;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="article")
      */
@@ -43,16 +42,6 @@ class Article
      * @ORM\Column(type="datetime")
      */
     private $modification_date;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PictureArticle", inversedBy="article", cascade={"persist", "remove"})
-     */
-    private $pictureArticle;
-
-    public function __construct()
-    {
-        $this->author = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -134,23 +123,6 @@ class Article
     public function setModificationDate(\DateTimeInterface $modification_date): self
     {
         $this->modification_date = $modification_date;
-
-        return $this;
-    }
-
-    public function getPictureArticle(): ?PictureArticle
-    {
-        return $this->pictureArticle;
-    }
-
-    public function setPictureArticle(PictureArticle $pictureArticle): self
-    {
-        $this->pictureArticle = $pictureArticle;
-
-        // set the owning side of the relation if necessary
-        if ($pictureArticle->getArticle() !== $this) {
-            $pictureArticle->setArticle($this);
-        }
 
         return $this;
     }

@@ -35,10 +35,10 @@ class APIController extends AbstractController
                     'author' => "auteur",
                     'create' => "date de creation",
                     'modif' => "date de modification",
-                    'image' => "path image",
+                    'image' => "assets/img/phone.jpg",
                 ]
             );
-        return $this->json(['data' => $articles]);
+        return $this->json($articles);
     }
 
     /**
@@ -63,32 +63,38 @@ class APIController extends AbstractController
     public function get_articles(int $page)
     {
         $articles = array(
+            "data" => [
                 [
+                    'id' => "1",
                     'title' => "titre",
                     'desc' => "description",
                     'author' => "auteur",
                     'create' => "date de creation",
                     'modif' => "date de modification",
-                    'image' => "path image",
+                    'image' => "assets/img/phone.jpg",
                 ],
                 [
+                    'id' => "2",
                     'title' => "titre",
                     'desc' => "description",
                     'author' => "auteur",
                     'create' => "date de creation",
                     'modif' => "date de modification",
-                    'image' => "path image",
+                    'image' => "assets/img/phone.jpg",
                 ],
                 [
+                    'id' => "3",
                     'title' => "titre",
                     'desc' => "description",
                     'author' => "auteur",
                     'create' => "date de creation",
                     'modif' => "date de modification",
-                    'image' => "path image",
+                    'image' => "assets/img/phone.jpg",
                 ]
-            );
-        return $this->json(['data' => $articles]);
+                ],
+            "nb_total" => 5
+        );
+        return $this->json($articles);
     }
 
 
