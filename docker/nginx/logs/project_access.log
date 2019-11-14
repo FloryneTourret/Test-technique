@@ -1,0 +1,5 @@
+172.24.0.1 - - [14/Nov/2019:14:56:53 +0000] "GET / HTTP/1.1" 404 54100 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+172.24.0.1 - - [14/Nov/2019:14:56:55 +0000] "GET /_wdt/4f222f HTTP/1.1" 200 14956 "http://localhost:8008/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+172.24.0.1 - - [14/Nov/2019:14:56:56 +0000] "GET /favicon.ico HTTP/1.1" 404 265210 "http://localhost:8008/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+172.24.0.1 - - [14/Nov/2019:15:10:09 +0000] "GET / HTTP/1.1" 404 54100 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+172.24.0.1 - - [14/Nov/2019:15:10:11 +0000] "GET /_wdt/ce6d4b HTTP/1.1" 200 14957 "http://localhost:8008/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
