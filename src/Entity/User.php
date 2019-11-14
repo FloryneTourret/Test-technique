@@ -69,6 +69,12 @@ class User implements UserInterface, \Serializable
     private $roles = [];
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="authot", orphanRemoval=true)
+     */
+    private $article;
+
+
     public function getId(): int
     {
         return $this->id;
@@ -95,9 +101,9 @@ class User implements UserInterface, \Serializable
     }
 
 	public function getPassword()
-    {
-        return $this->password;
-    }
+             {
+                 return $this->password;
+             }
 
     public function setPassword(string $password): void
     {
@@ -177,5 +183,17 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized): void
     {
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
     }
 }
