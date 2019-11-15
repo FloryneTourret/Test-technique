@@ -70,9 +70,15 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="authot", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author", orphanRemoval=true)
      */
     private $article;
+
+    
+    public function __construct()
+    {
+        $this->article = new ArrayCollection();
+    }
 
 
     public function getId(): int
@@ -185,15 +191,8 @@ class User implements UserInterface, \Serializable
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    public function getArticle(): ?Article
+    public function getArticle()
     {
         return $this->article;
-    }
-
-    public function setArticle(?Article $article): self
-    {
-        $this->article = $article;
-
-        return $this;
     }
 }

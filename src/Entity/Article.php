@@ -29,6 +29,11 @@ class Article
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $picture;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="article")
      */
     private $author;
@@ -36,12 +41,12 @@ class Article
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creation_date;
+    private $creationDate;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $modification_date;
+    private $modificationDate;
 
     public function getId(): ?int
     {
@@ -59,6 +64,19 @@ class Article
 
         return $this;
     }
+    
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
 
     public function getDescription(): ?string
     {
@@ -72,12 +90,15 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getAuthor(): Collection
+    
+    public function getAuthor(): ?User
     {
         return $this->author;
+    }
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+        return $this;
     }
 
     public function addAuthor(User $author): self
@@ -105,24 +126,24 @@ class Article
 
     public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
     public function setCreationDate(\DateTimeInterface $creation_date): self
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creation_date;
 
         return $this;
     }
 
     public function getModificationDate(): ?\DateTimeInterface
     {
-        return $this->modification_date;
+        return $this->modificationDate;
     }
 
     public function setModificationDate(\DateTimeInterface $modification_date): self
     {
-        $this->modification_date = $modification_date;
+        $this->modificationDate = $modification_date;
 
         return $this;
     }

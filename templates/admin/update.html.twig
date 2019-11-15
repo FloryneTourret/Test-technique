@@ -8,13 +8,13 @@
     <form action="{{ path('add_article') }}" method="post">
         <fieldset class="uk-fieldset">
             
-            <legend class="uk-legend">Ajouter un article</legend>
+            <legend class="uk-legend">Modifier un article</legend>
             
             <div class="uk-margin">
-                <input class="uk-input" type="text" placeholder="Titre" id="title" name="_title">
+                <input class="uk-input" type="text" placeholder="Titre" id="title" name="_title" value="{{article.title}}">
             </div>
             <div class="uk-margin">
-                <input class="uk-input" type="text" placeholder="Description" id="desc" name="_description">
+                <input class="uk-input" type="text" placeholder="Description" id="desc" name="_description" value="{{article.description}}">
             </div>
             {# <div class="uk-margin">
                 <div uk-form-custom="target: true">
@@ -24,7 +24,7 @@
             </div> #}
             
             <div class="uk-margin" uk-margin>
-                <button class="uk-button uk-button-default" type="submit" >Ajouter</button>
+                <button class="uk-button uk-button-default" type="submit" >Modifier</button>
             </div>
             
         </fieldset>
@@ -46,17 +46,18 @@
             'title'              : $('input[name=_title]').val(),
             'description'        : $('input[name=_description]').val(),
             'picture'            : "/assets/img/phone.jpg",
-            'username'           : '{{ app.user.username }}'
+            'username'           : '{{ app.user.username }}',
+            'id'                 : '{{ id }}'
         };
         $.ajax({
-            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-            url         : '/api/v1/article', // the url where we want to POST
+            type        : 'PUT', // define the type of HTTP verb we want to use (POST for our form)
+            url         : '/api/v1/article/' + {{ id }}, // the url where we want to POST
             data        : formData, // our data object
             dataType    : 'json', // what type of data do we expect back from the server
                         encode          : true
         })
             .done(function(data) {
-                window.location.replace("/article/" + data['id']);
+                window.location.replace("/admin/article/" + {{ id }});
             });
         event.preventDefault();
     });

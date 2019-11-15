@@ -3,4 +3,44 @@
 {% block title %}Test technique{% endblock %}
 
 {% block body %}
+<div class="main">
+
+<div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+    <div class="uk-card-media-left uk-cover-container">
+        <img src="{{article.picture}}" alt="" uk-cover>
+        <canvas width="600" height="400"></canvas>
+    </div>
+    <div>
+        <div class="uk-card-body">
+            {% if app.user %}
+                {% if app.user.roles == ["ROLE_ADMIN"] %}
+                    <a href="/admin/article/{{article.id}}">Modifier</a><br>
+                    <a onclick="delete_article({{article.id}})">Supprimer</a><br>
+                {% endif %}
+            {% endif %}
+            <small>Par {{article.author.username}}</small><br>
+            <small>Créé le{{article.creationDate |date("d/m/Y")}}</small><br>
+            <small>Modifié le{{article.modificationDate |date("d/m/Y")}}</small>
+            <h3 class="uk-card-title">{{article.title}}</h3>
+            <p>{{article.description}}</p>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function delete_article(id) {
+
+        $.ajax({
+            url: '/api/v1/article/' + id,
+            type: 'DELETE',
+            success: function (data) {
+                window.location.replace('/');
+            },
+        });
+    }
+</script>
 {% endblock %}

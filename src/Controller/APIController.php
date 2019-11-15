@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Article;
+use App\Entity\User;
 
 class APIController extends AbstractController
 {
@@ -20,25 +22,31 @@ class APIController extends AbstractController
      */
     public function post_article()
     {
-        return $this->redirectToRoute('admin');
-    }
+        $article = new Article();
+        $em = $this->getDoctrine()->getManager();
 
-    /**
-     * @Route("/api/v1/article/{id}", methods={"GET"})
-     */
-    public function get_article(int $id)
-    {
-        $articles = array(
-                [
-                    'title' => "titre",
-                    'desc' => "description",
-                    'author' => "auteur",
-                    'create' => "date de creation",
-                    'modif' => "date de modification",
-                    'image' => "assets/img/phone.jpg",
-                ]
-            );
-        return $this->json($articles);
+        if(!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['picture']) && !empty($_POST['username']))
+        {
+
+            $content_article = $_POST;
+            
+            $article->setTitle($content_article['title']);
+            $article->setDescription($content_article['description']);
+            $article->setPicture($content_article['picture']);
+            $article->setCreationDate(new \DateTime('now'));
+            $article->setModificationDate(new \DateTime('now'));
+            
+            $user = $em->getRepository(User::class)->findOneBy(array( "username" => $content_article['username']));
+            $article->setAuthor($user);
+            
+            $em->persist($article);
+            $em->flush();
+            
+            return $this->json(["id" => $article->getId()]);
+        }
+        else{
+            return $this->json(["error" => "Please fill all the fields"]);
+        }
     }
 
     /**
@@ -46,7 +54,27 @@ class APIController extends AbstractController
      */
     public function put_article(int $id)
     {
-        return $this->redirectToRoute('admin');
+        $em = $this->getDoctrine()->getManager();
+        parse_str(file_get_contents("php://input"), $_PUT);
+        if(!empty($_PUT['title']) && !empty($_PUT['description']) && !empty($_PUT['picture']) && !empty($_PUT['username']) && !empty($_PUT['id']))
+        {
+
+            $content_article = $_PUT;
+            $article = $em->getRepository(Article::class)->findOneBy(array( "id" => $content_article['id']));
+
+            
+            $article->setTitle($content_article['title']);
+            $article->setDescription($content_article['description']);
+            $article->setModificationDate(new \DateTime('now'));
+
+            $em->persist($article);
+            $em->flush();
+            
+            return $this->json(["id" => $article->getId()]);
+        }
+        else{
+            return $this->json(["error" => "Please fill all the fields"]);
+        }
     }
 
     /**
@@ -54,7 +82,12 @@ class APIController extends AbstractController
      */
     public function delete_article(int $id)
     {
-        return $this->redirectToRoute('admin');
+        
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository(Article::class)->findOneBy(["id" => $id]);
+        $em->remove($article);
+        $em->flush();
+        return $this->json(["success" => "Removed"]);
     }
 
     /**
@@ -62,39 +95,10 @@ class APIController extends AbstractController
      */
     public function get_articles(int $page)
     {
-        $articles = array(
-            "data" => [
-                [
-                    'id' => "1",
-                    'title' => "titre",
-                    'desc' => "description",
-                    'author' => "auteur",
-                    'create' => "date de creation",
-                    'modif' => "date de modification",
-                    'image' => "assets/img/phone.jpg",
-                ],
-                [
-                    'id' => "2",
-                    'title' => "titre",
-                    'desc' => "description",
-                    'author' => "auteur",
-                    'create' => "date de creation",
-                    'modif' => "date de modification",
-                    'image' => "assets/img/phone.jpg",
-                ],
-                [
-                    'id' => "3",
-                    'title' => "titre",
-                    'desc' => "description",
-                    'author' => "auteur",
-                    'create' => "date de creation",
-                    'modif' => "date de modification",
-                    'image' => "assets/img/phone.jpg",
-                ]
-                ],
-            "nb_total" => 5
-        );
-        return $this->json($articles);
+        $em = $this->getDoctrine()->getManager();
+        $list_articles = $em->getRepository(Article::class)->findBy(array(), null, 10, 10 * ($page - 1));
+        dump($list_articles);die;
+        return $this->json($list_articles);
     }
 
 
